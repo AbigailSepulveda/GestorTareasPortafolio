@@ -17,7 +17,7 @@ namespace gestor_tareas.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Sitio web para administrar y gestionar tareas.";
+            ViewData["Message"] = "Sitio web para administrar y gestionar tareas11.";
 
             return View();
         }
