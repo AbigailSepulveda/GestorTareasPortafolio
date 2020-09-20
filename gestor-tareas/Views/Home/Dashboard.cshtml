@@ -6,23 +6,109 @@
 <p>Panel de administracion.</p>
 
 
-@using Microsoft.AspNetCore.Identity
+<!DOCTYPE html>
+<html lang="en">
+<body>
 
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+    <nav class="navbar navbar-inverse visible-xs">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Logo</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Dashboard</a></li>
+                    <li><a href="#">Age</a></li>
+                    <li><a href="#">Gender</a></li>
+                    <li><a href="#">Geo</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-@if (SignInManager.IsSignedIn(User))
-{
-    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Bienvenido @UserManager.GetUserName(User)!</a>
-            </li>
-            <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">Logout</button>
-            </li>
-        </ul>
-    </form>
+    <div class="container-fluid">
+        <div class="row content">
+            <div class="col-sm-3 sidenav hidden-xs">
+                <h2>Logo</h2>
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active"><a href="#section1">Empresa1</a></li>
+                    <li><a href="#section2">Empresa2</a></li>
+                    <li><a href="#section3">Empresa3</a></li>
+                    <li><a href="#section3">Empresa4</a></li>
+                </ul><br>
+            </div>
+            <br>
+
+            <div class="col-sm-9">
+                <div class="well">
+                    <h4>Administrado: Felipe</h4>
+                    <p>Administrador a cargo de .... la empresa ...</p>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="well">
+                            <h4>Funcionarios</h4>
+                            <p>42</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="well">
+                            <h4>Tareas</h4>
+                            <p>88</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="well">
+                            <h4>Sin asignar</h4>
+                            <p>21</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="well">
+                            <h4>Avanzado segun fechas</h4>
+                            <p>44%</p>
+                        </div>
+                    </div>
+                </div>
 
 
-}
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="well">
+                            <h4>Grafico 1</h4>
+                            <p>GRAFICO</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="well">
+                            <h4>GRAFICO 2</h4>
+                            <p>GRAFICO</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="well">
+                            <h4>GRAFICO 3</h4>
+                            <p>GRAFICO</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="well">
+                            <h4>GRAFICO 4</h4>
+                            <p>GRAFICO</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

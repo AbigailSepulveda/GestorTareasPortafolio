@@ -31,8 +31,7 @@ namespace gestor_tareas.Controllers
 
         public IActionResult Dashboard()
         {
-            ViewData["Message"] = "Dashboard.";
-
+            ViewData["Message"] = "Dashboard";
             return View();
         }
 
