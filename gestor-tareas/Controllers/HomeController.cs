@@ -35,6 +35,12 @@ namespace gestor_tareas.Controllers
             return View();
         }
 
+        public IActionResult FuncionarioDashboard()
+        {
+            ViewData["Message"] = "Funcionario Dashboard";
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

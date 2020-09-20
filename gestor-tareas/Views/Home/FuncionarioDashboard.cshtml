@@ -1,9 +1,9 @@
 ﻿@{
-    ViewData["Title"] = "Dashboard";
+    ViewData["Title"] = "Dashboard Funcionario";
 }
 <h3>@ViewData["Message"]</h3>
 
-<p>Panel de Funcionario</p>
+<p>Panel de administracion.</p>
 
 
 <!DOCTYPE html>
@@ -22,7 +22,7 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Dashboard</a></li>
+                    <li class="active"><a href="#">Dashboard del funcionario</a></li>
                     <li><a href="#">Age</a></li>
                     <li><a href="#">Gender</a></li>
                     <li><a href="#">Geo</a></li>
@@ -36,58 +36,71 @@
             <div class="col-sm-3 sidenav hidden-xs">
                 <ul class="nav nav-pills nav-stacked">
                     <li class="active"><a href="#section1">Empresa1</a></li>
-                    <li><a href="#section2">Empresa2</a></li>
-                    <li><a href="#section3">Empresa3</a></li>
-                    <li><a href="#section3">Empresa4</a></li>
                 </ul><br>
+                    <ul class="nav nav-pills nav-stacked">
+                        <li class="btn"><a href="crudTareas"> Tareas</a></li>
 
-                <ul class="nav nav-pills nav-stacked">
-                <li class="btn"><a href="crearUsuarios"> Usuarios</a></li>
-                <li class="btn"><a href="crearUnidadesInternas"> Unidades Internas</a></li>
-                <li class="btn"><a href="AsignarRoless"> Roles</a></li>
-                <li class="btn"><a href="crearFlujos"> Flujos de tareas</a></li>
-                </ul><br>
+                        <li class="btn"><a href="crearTareaSubordinada"> Tarea subordinada</a></li>
 
+                        <li class="btn"><a href="asignarResponsable"> Asignacion de responsable</a></li>
+
+                        <li class="btn"><a href="devolverTarea"> Devolver tarea</a></li>
+
+                        <li class="btn"><a href="reasignarTarea"> Reasignar tarea</a></li>
+
+                        <li class="btn"><a href="modificarTarea"> Modificar tarea</a></li>
+
+                        <li class="btn"><a href="terminarTarea"> Terminar tarea</a></li>
+
+                        <li class="btn"><a href="actualizarSemaforo"> Actualizar semáforo</a></li>
+
+                        <li class="btn"><a href="reportarProblema"> Reportar problema</a></li>
+
+                        <li class="btn"><a href="calcularCarga"> Calcular carga de trabajo</a></li>
+                    
+                        <li class="btn"><a href="mostrarResumen"> Mostrar resumen</a></li>
+
+                        <li class="btn"><a href="ejecutarFlujos"> Ejecutar flujos</a></li>
+                    </ul><br>
             </div>
 
                 <div class="col-sm-9">
                     <div class="well">
-                        <h4>Administrado: Felipe</h4>
-                        <p>Administrador a cargo de .... la empresa ...</p>
+                        <h4>Funcionario: Abigail</h4>
+                        <p>Funcionario Unidad: 1</p>
                     </div>
                     <div class="row">
                         <div class="col-sm-3">
                             <div class="well">
-                                <h4>Funcionarios</h4>
-                                <p>42</p>
+                                <h4>Subordinados</h4>
+                                <p>6</p>
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="well">
                                 <h4>Tareas</h4>
-                                <p>88</p>
+                                <p>20</p>
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="well">
                                 <h4>Sin asignar</h4>
-                                <p>21</p>
+                                <p>9</p>
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="well">
-                                <h4>Avanzado</h4>
+                                <h4>Avanzado segun fechas</h4>
                                 <p>30%</p>
                             </div>
                         </div>
                     </div>
 
 
-
                     <div class="row">
                         <div class="col-sm-3">
                             <div class="well">
-                                <h4>Cantidad de funcionarios</h4>
+                                <h4>Cantidad de subordinados</h4>
                                 <img src="http://www.pngpix.com/wp-content/uploads/2016/10/PNGPIX-COM-Pie-Chart-PNG-Transparent-Image.png" alt="grafico 1" height="100" width="100">
                             </div>
                         </div>
