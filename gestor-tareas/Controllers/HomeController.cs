@@ -29,6 +29,13 @@ namespace gestor_tareas.Controllers
             return View();
         }
 
+        public IActionResult Dashboard()
+        {
+            ViewData["Message"] = "Dashboard.";
+
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
