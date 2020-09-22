@@ -1,0 +1,31 @@
+﻿@model SGM_INSPECCION_DIGITAL.Models.LoginView
+@{
+    ViewBag.Title = "Inicio de Sesión";
+    Layout = "~/Views/Shared/_LoginPartial.cshtml";
+}
+<div class="splash-container">
+    <div class="card">
+        <div class="card-header text-center">
+            <a><img class="logo-img" src="~/Content/assets/images/logo.png" alt="logo" style="height:auto;width:200px;"></a>
+        </div>
+        <div class="card-body">
+            <span class="splash-description">Iniciar Sesión</span>
+            @using (Html.BeginForm()) {
+                <div class="form-group">
+                    @Html.TextBoxFor(u => u.User, new { @class = "form-control form-control-lg", @autocomplete = "off", @placeholder = "Usuario" })<br />
+                </div>
+                <div class="form-group">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-lg", @placeholder = "Contraseña" })
+                </div>
+                <div class="form-row" align="right">
+                    <label class="custom-control custom-checkbox" for="RememberMe" style="margin-left:5px;" >
+                        @Html.CheckBoxFor(m => m.RememberMe, new { @class = "custom-control-input" })
+                        <span class="custom-control-label">Recordarme</span>
+                    </label>
+                </div>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <button type="submit" class="btn btn-primary btn-lg btn-block" style="margin-top:20px;">Ingresar</button>
+            }
+        </div>
+    </div>
+</div>

@@ -1,2 +1,0 @@
-# GestorTareasPortafolio
-Gesto Tareas Portafolio
