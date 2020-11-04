@@ -218,6 +218,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -225,11 +226,14 @@
     <Compile Include="Models\Enterprise.cs" />
     <Compile Include="Models\LoginView.cs" />
     <Compile Include="Models\Module.cs" />
+    <Compile Include="Models\Request\GetUsersByUnitRequest.cs" />
     <Compile Include="Models\Request\LoginRequest.cs" />
     <Compile Include="Models\Response\BaseResponse.cs" />
     <Compile Include="Models\Rol.cs" />
+    <Compile Include="Models\ProcessModel.cs" />
     <Compile Include="Models\TaskStatus.cs" />
     <Compile Include="Models\TypeAlert.cs" />
+    <Compile Include="Models\TaskModel.cs" />
     <Compile Include="Models\Unit.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserLogin.cs" />
@@ -836,11 +840,13 @@
     <Content Include="Content\FileUpload\dist\less\file-upload.less" />
     <Content Include="Content\SelectSearch\css\bootstrap-select.css.map" />
     <Content Include="Content\SelectSearch\js\bootstrap-select.js.map" />
+    <Content Include="JS\CreateTask.js" />
+    <Content Include="JS\Tasks.js" />
+    <Content Include="JS\Utils.js" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\_Home.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Web.config">
@@ -878,7 +884,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Code\ModalLoading.cshtml" />
     <None Include="packages.config" />
+    <Content Include="Views\Tasks\Index.cshtml" />
+    <Content Include="Views\Tasks\Create.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

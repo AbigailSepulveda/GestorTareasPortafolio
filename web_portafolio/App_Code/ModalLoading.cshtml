@@ -1,0 +1,42 @@
+﻿@helper Modal() {
+    <script>
+        function showModalLoading(title) {
+            $('#divLoading').html(title);
+            $("#modalLoading").modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+        }
+        function hideModalLoading() {
+            $("#modalLoading").modal('hide');
+        }
+    </script>
+
+    <div class="modal fade" id="modalLoading" tabindex="-1" role="dialog" aria-labelledby="divLoading" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-content">
+                    <center>
+                        <div class="t">
+                            <div class="c" align="center">
+                                <h3 class="modal-title" id="divLoading" style="vertical-align:central;">Detalle</h3>
+                            </div>
+                            <img src="~/Content/assets/images/spinner.gif" width="64" height="64" />
+                        </div>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .t {
+            display: table;
+        }
+
+        .c {
+            display: table-cell;
+            vertical-align: middle;
+        }
+    </style>
+}

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
-namespace SGM_INSPECCION_DIGITAL.Models {
+namespace web_portafolio.Models {
     public class LoginView {
         [Required]
         [Display(Prompt = "Usuario")]

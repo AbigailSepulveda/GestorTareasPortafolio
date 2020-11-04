@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewBag.Title = "Tareas";
+}
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="page-header">
+            <p class="pageheader-text"><div id="lblTitle"><h2 class="pageheader-title">Tareas</h2></div></p>
+        </div>
+    </div>
+
+    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 col-12">
+        <div class="card">
+            <div class="card-header" align="right">
+                <button class="btn btn-info" onclick="loadData();"> ACTUALIZAR </button>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="tableTasks" class="table table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Informacion</th>
+                                <th>Fechas</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 col-12">
+        <div class="card">
+            <div class="card-title">
+                <h5 class="card-header">Información de la Tarea</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-row col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+                        <label for="patente" class="col-form-label">Nombre</label>
+                        <input type="text" id="nombre" class="form-control" placeholder="" style="text-transform:uppercase" />
+                        <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                    </div>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+                        <label for="patente" class="col-form-label">Descripcion</label>
+                        <input type="text" id="descripcion" class="form-control" placeholder="" style="text-transform:uppercase" />
+                        <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 col-12">
+                        <label for="fechaInicio" class="col-form-label">Inicio</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                            </span>
+                            <input id="fechaInicio" type="text" class="form-control">
+                            <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 col-12">
+                        <label for="fechaTermino" class="col-form-label">Termino</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                            </span>
+                            <input id="fechaTerimno" type="text" class="form-control">
+                            <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 col-12">
+                        <label for="estado" class="col-form-label">Estado</label>
+                        <select class="form-control" id="estado">
+                            <option value="-1">Seleccionar</option>
+                            @{
+                                //foreach (EF.SP_LISTA_CALLES_Result s in listStreets) {
+                                //<option value="@s.ID_CALLE">@s.NOMBRE</option>
+                                //}
+                            }
+                        </select>
+                        <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 col-12">
+                        <label for="asignado" class="col-form-label">Asignado</label>
+                        <select class="form-control" id="asignado">
+                            <option value="-1">Seleccionar</option>
+                            @{
+                                //foreach (EF.SP_LISTA_CALLES_Result s in listStreets) {
+                                //    <option value="@s.ID_CALLE">@s.NOMBRE</option>
+                                //}
+                            }
+                        </select>
+                        <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div id="sparkline-revenue"></div>
+            <div class="form-row" align="right">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12" align="right">
+                    <button class="btn btn-dark" onclick="cleanInputs();" style="width:150px;">Documentos</button>
+                    &nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-success" onclick="create();" style="width:150px;">Actualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/Tasks/Index")

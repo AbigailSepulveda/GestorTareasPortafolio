@@ -1,0 +1,129 @@
+﻿
+@model web_portafolio.Models.ViewModelBase
+@{
+    ViewBag.Title = "Tarea";
+    List<web_portafolio.Models.User> usuarios = new web_portafolio.Controllers.TasksController().getUsersByUnitForSelect(Model.Token, Model.Unit).Result;
+    List<web_portafolio.Models.TaskModel> tasks = new web_portafolio.Controllers.TasksController().getTasksByUser(Model.Token, Model.Id).Result;
+}
+
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="page-header">
+        </div>
+
+        <div class="row">
+
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-12">
+
+            </div>
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-8 col-12" align="left">
+                <h2>Crear Tarea</h2>
+            </div>
+
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-12">
+
+            </div>
+
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-12">
+
+            </div>
+
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-8 col-12">
+                <div class="card">
+                    <div class="card-title">
+                        <h5 class="card-header">Información de la Tarea</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+                                <label for="nombre" class="col-form-label">Nombre</label>
+                                <input type="text" id="nombre" class="form-control" placeholder="" style="text-transform:capitalize" maxlength="255" />
+                                <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                            </div>
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+                                <label for="descripcion" class="col-form-label">Descripcion</label>
+                                <input type="text" id="descripcion" class="form-control" placeholder="" maxlength="255" />
+                                <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 col-12">
+                                <label for="responsable" class="col-form-label">Responsable</label>
+                                <select class="form-control" id="responsable">
+                                    <option value="-1">Seleccionar</option>
+                                    @{
+                                        foreach (web_portafolio.Models.User s in usuarios) {
+                                            <option value="@s.id">@s.name</option>
+                                        }
+                                    }
+                                </select>
+                                <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 col-12">
+                                <label for="padre" class="col-form-label">Tarea Padre</label>
+                                <select class="form-control" id="padre">
+                                    <option value="-1">Seleccionar</option>
+                                    @{
+                                        foreach (web_portafolio.Models.TaskModel s in tasks) {
+                                            <option value="@s.id">@s.name</option>
+                                        }
+                                    }
+                                </select>
+                                <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 col-12">
+                                <label for="estado" class="col-form-label">Estado</label>
+                                <select class="form-control" id="estado" disabled>
+                                    <option value="0">Pendiente</option>
+                                </select>
+                                <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3 col-12">
+                                <label for="fechaInicio" class="col-form-label">Inicio</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                    </span>
+                                    <input id="fechaInicio" type="text" class="form-control">
+                                    <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3 col-12">
+                                <label for="fechaTermino" class="col-form-label">Termino</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                    </span>
+                                    <input id="fechaTermino" type="text" class="form-control">
+                                    <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row" align="right">
+                    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-8 col-12" align="right">
+                        <br />
+                        <button class="btn btn-light" onclick="cleanInputs();" style="width:150px;">Limpiar</button>
+                    </div>
+                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-12" align="right">
+                        <br />
+                        <label class="file-upload btn btn-outline-dark col-form-label" for="FileUpload" id="labelIU">
+                            Agregar Documento
+                            <input class="form-control" type="file" id="FileUpload1" accept="files/*" />
+                        </label>
+                    </div>
+                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-12" align="right">
+                        <br />
+                        <button class="btn btn-outline-success" onclick="createTask();" style="width:150px;">Guardar</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-12">
+
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/Tasks/Create")

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace api_.Models {
+namespace web_portafolio.Models {
     public class User {
         public long id { get; set; }
         public String name { get; set; }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace api_.Models {
+namespace web_portafolio.Models {
     public class Rol {
         public long id { get; set; }
         public string name { get; set; }

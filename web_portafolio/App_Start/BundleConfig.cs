@@ -101,6 +101,16 @@ namespace web_portafolio
                       //"~/Content/DataTables/js/jquery.dataTables.min.js",
                       //"~/Content/assets/vendor/datatables/js/dataTables.fixedHeader.min.js"
                       ));
+
+
+
+            // Tasks
+            bundles.Add(new ScriptBundle("~/bundles/Tasks/Index").Include(
+            "~/JS/Tasks.js"
+            ));
+            bundles.Add(new ScriptBundle("~/bundles/Tasks/Create").Include(
+            "~/JS/CreateTask.js"
+            ));
         }
     }
 }

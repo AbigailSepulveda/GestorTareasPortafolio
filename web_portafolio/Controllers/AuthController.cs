@@ -1,14 +1,12 @@
-﻿using api_.Models;
-using Microsoft.Owin.Security;
+﻿using Microsoft.Owin.Security;
 using Newtonsoft.Json;
-using SGM_INSPECCION_DIGITAL.Models;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
+using web_portafolio.Models;
 using web_portafolio.Models.Request;
 using web_portafolio.Models.Response;
 
@@ -30,7 +28,7 @@ namespace web_portafolio.Controllers {
             }
             try {
                 using (var client = getClient()) {
-                    var myContent = JsonConvert.SerializeObject(new LoginRequest() { email = model.User, password = model.Password });
+                    var myContent = JsonConvert.SerializeObject(new LoginRequest() { email = model.User, password = encodeTo64(model.Password) });
                     var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
                     var byteContent = new ByteArrayContent(buffer);
                     byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
@@ -46,12 +44,28 @@ namespace web_portafolio.Controllers {
                         var data = JsonConvert.DeserializeObject<BaseResponse<User>>(responseAsString.Result);
 
 
+
                         if (data.success) {
+
+                            string models = "";
+
+                            foreach (Module module in data.data.rol.modules) {
+                                if (models == "") {
+                                    models = module.code;
+                                } else {
+                                    models = models + ", " + module.code;
+                                }
+                            }
+
                             var identity = new ClaimsIdentity(new[] {
                             new Claim(ClaimTypes.Name, data.data.name),
                             new Claim(ClaimTypes.Email, data.data.email),
                             new Claim(ClaimTypes.Sid, data.data.id+""),
-                            new Claim(ClaimTypes.Role, data.data.rol.id+"")
+                            new Claim(ClaimTypes.Role, data.data.rol.id+""),
+                            new Claim(ClaimTypes.GroupSid, models),
+                            new Claim(ClaimTypes.UserData, data.data.unit.id+""),
+                            new Claim(ClaimTypes.Authentication, data.data.token_session),
+                            new Claim(ClaimTypes.NameIdentifier, data.data.id + "")
                             }, "ApplicationCookie");
 
                             var ctx = Request.GetOwinContext();
@@ -72,30 +86,9 @@ namespace web_portafolio.Controllers {
             return View(model);
         }
 
-        public string[] getData() {
-            var identity = (ClaimsIdentity)User.Identity;
-            string[] data = null;
-            if (identity != null) {
-                IEnumerable<Claim> claims = identity.Claims;
-                data = new string[]{
-                identity.FindFirst(ClaimTypes.Name).Value,
-                identity.FindFirst(ClaimTypes.SerialNumber).Value,
-                identity.FindFirst(ClaimTypes.Role).Value,
-                identity.FindFirst(ClaimTypes.Email).Value
-            };
-            }
-            return data;
-        }
-
         public ActionResult ChangePass() {
             if (User.Identity.IsAuthenticated) {
-                var data = getData();
-                return View(new HomeViewModel {
-                    Name = data[0],
-                    Rut = data[1],
-                    Type = data[2],
-                    Email = data[3]
-                });
+                return View(getHomeViewModel());
             } else {
                 return RedirectToAction("Login", "Auth");
             }
@@ -103,8 +96,6 @@ namespace web_portafolio.Controllers {
 
         [HttpPost]
         public ActionResult ChangePass(HomeViewModel model) {
-            var data = getData();
-
             if (!ModelState.IsValid) {
                 ModelState.AddModelError("error", "ambos campos son necesarios");
             } else {
@@ -128,12 +119,7 @@ namespace web_portafolio.Controllers {
                     ModelState.AddModelError("error", "error, detalle: " + e.ToString());
                 }
             }
-            return View(new HomeViewModel {
-                Name = data[0],
-                Rut = data[1],
-                Type = data[2],
-                Email = data[3]
-            });
+            return View(getHomeViewModel());
         }
 
         public ActionResult Logout() {
@@ -142,6 +128,20 @@ namespace web_portafolio.Controllers {
 
             authManager.SignOut("ApplicationCookie");
             return RedirectToAction("Login", "Auth");
+        }
+
+        public static string encodeTo64(string toEncode) {
+
+            byte[] toEncodeAsBytes
+
+                  = System.Text.ASCIIEncoding.ASCII.GetBytes(toEncode);
+
+            string returnValue
+
+                  = System.Convert.ToBase64String(toEncodeAsBytes);
+
+            return returnValue;
+
         }
     }
 }
