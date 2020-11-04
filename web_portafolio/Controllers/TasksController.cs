@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -136,8 +137,8 @@ namespace web_portafolio.Controllers {
                 }
 
                 TaskModel taskModel = new TaskModel();
-                taskModel.dateStart = start;
-                taskModel.dateEnd = end;
+                taskModel.dateStart = DateTime.Parse(start);
+                taskModel.dateEnd = DateTime.Parse(end);
                 taskModel.name = nombre;
                 taskModel.description = descripcion;
                 taskModel.fatherTaksId = int.Parse(taskId);
@@ -175,6 +176,71 @@ namespace web_portafolio.Controllers {
                     }
                 }
                 return Json(new { isReady = true, msg = "" }, JsonRequestBehavior.AllowGet);
+            } catch (Exception e) {
+                return Json(new { isReady = false, msg = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> getTasksByUserId() {
+            List<ListTaskModel> tasks = new List<ListTaskModel>();
+            try {
+                var identity = getHomeViewModel();
+                using (var client = getClient(identity.Token)) {
+                    var getTask = client.GetAsync(endPointTask + "/getTasksByUser?id= " + identity.Id);
+                    getTask.Wait();
+
+                    HttpResponseMessage response = getTask.Result;
+                    if (response.IsSuccessStatusCode) {
+                        response.EnsureSuccessStatusCode();
+                        var responseAsString = response.Content.ReadAsStringAsync();
+                        responseAsString.Wait();
+                        var resultRemote = JsonConvert.DeserializeObject<BaseResponse<List<TaskModel>>>(responseAsString.Result);
+
+                        if (resultRemote.success) {
+                            var remoteTasks = resultRemote.data;
+                            tasks = remoteTasks.Select(x => new ListTaskModel() {
+                                id = x.id,
+                                name = x.name + " <br/> " + x.description,
+                                fechas = ((DateTime)x.dateStart).ToString(formatDate).Replace("-", "/")
+                                + " <br/> "
+                                + ((DateTime)x.dateEnd).ToString(formatDate).Replace("-", "/"),
+                                estado = x.taskStatusId == "0" ? "Pendiente" : x.taskStatusId == "1" ? "Trabajando" : x.taskStatusId == "2" ? "Realizado" : x.taskStatusId == "3" ? "Rechazado" : ""
+                            }).ToList();
+                        }
+                    }
+                }
+                return Json(new { isReady = true, list = tasks, msg = "" }, JsonRequestBehavior.AllowGet);
+            } catch (Exception e) {
+                return Json(new { isReady = false, msg = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> getTaskById(string id) {
+            TaskModel task = null;
+            try {
+                var identity = getHomeViewModel();
+                using (var client = getClient(identity.Token)) {
+                    var getTask = client.GetAsync(endPointTask + "/getByTaskId?id= " + id);
+                    getTask.Wait();
+
+                    HttpResponseMessage response = getTask.Result;
+                    if (response.IsSuccessStatusCode) {
+                        response.EnsureSuccessStatusCode();
+                        var responseAsString = response.Content.ReadAsStringAsync();
+                        responseAsString.Wait();
+                        var resultRemote = JsonConvert.DeserializeObject<BaseResponse<TaskModel>>(responseAsString.Result);
+
+                        if (resultRemote.success) {
+                            var remoteTasks = resultRemote.data;
+                            task = remoteTasks;
+                            task.sDateStart = ((DateTime)task.dateStart).ToString(formatDate).Replace("-","/");
+                            task.sDateEnd = ((DateTime)task.dateEnd).ToString(formatDate).Replace("-", "/");
+                        }
+                    }
+                }
+                return Json(new { isReady = true, list = task, msg = "" }, JsonRequestBehavior.AllowGet);
             } catch (Exception e) {
                 return Json(new { isReady = false, msg = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
             }

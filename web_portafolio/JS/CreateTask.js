@@ -16,15 +16,14 @@
 });
 
 function cleanInputs() {
-    $("#modalNroDenuncio").removeAttr('readonly');
     $("#nombre").val('');
     $("#descripcion").val('');
     $("#padre").val('-1');
     $("#proceso").val('-1');
     $("#responsable").val('-1');
     $("#fechaInicio").val('');
-    $("#fechaInicio").val('');
-    document.getElementById('FileUpload1').value = ''
+    $("#fechaTermino").val('');
+    document.getElementById('FileUpload1').value = '';
 }
 
 function createTask() {

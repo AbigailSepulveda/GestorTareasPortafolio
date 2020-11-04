@@ -1,6 +1,9 @@
 ﻿
 @{
     ViewBag.Title = "Tareas";
+    List<web_portafolio.Models.User> usuarios = new web_portafolio.Controllers.TasksController().getUsersByUnitForSelect(Model.Token, Model.Unit).Result;
+    List<web_portafolio.Models.TaskModel> tasks = new web_portafolio.Controllers.TasksController().getTasksByUser(Model.Token, Model.Id).Result;
+    List<web_portafolio.Models.ProcessModel> process = new web_portafolio.Controllers.TasksController().getProcessByUser(Model.Token, Model.Id).Result;
 }
 
 <div class="row">
@@ -23,6 +26,7 @@
                                 <th>Informacion</th>
                                 <th>Fechas</th>
                                 <th>Estado</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -39,7 +43,7 @@
             <div class="card-body">
                 <div class="form-row col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
-                        <label for="patente" class="col-form-label">Nombre</label>
+                        <label for="nombre" class="col-form-label">Nombre</label>
                         <input type="text" id="nombre" class="form-control" placeholder="" style="text-transform:uppercase" />
                         <div class="invalid-feedback" id="lblError">Campo Requerido</div>
                     </div>
@@ -66,7 +70,7 @@
                             <span class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                             </span>
-                            <input id="fechaTerimno" type="text" class="form-control">
+                            <input id="fechaTermino" type="text" class="form-control">
                             <div class="invalid-feedback" id="lblError">Campo Requerido</div>
                         </div>
                     </div>
@@ -74,11 +78,10 @@
                         <label for="estado" class="col-form-label">Estado</label>
                         <select class="form-control" id="estado">
                             <option value="-1">Seleccionar</option>
-                            @{
-                                //foreach (EF.SP_LISTA_CALLES_Result s in listStreets) {
-                                //<option value="@s.ID_CALLE">@s.NOMBRE</option>
-                                //}
-                            }
+                            <option value="0">Pendiente</option>
+                            <option value="1">Trabajando</option>
+                            <option value="2">Realizado</option>
+                            <option value="3">Rechazado</option>
                         </select>
                         <div class="invalid-feedback" id="lblError">Campo Requerido</div>
                     </div>
@@ -87,9 +90,9 @@
                         <select class="form-control" id="asignado">
                             <option value="-1">Seleccionar</option>
                             @{
-                                //foreach (EF.SP_LISTA_CALLES_Result s in listStreets) {
-                                //    <option value="@s.ID_CALLE">@s.NOMBRE</option>
-                                //}
+                                foreach (web_portafolio.Models.User s in usuarios) {
+                                    <option value="@s.id">@s.name</option>
+                                }
                             }
                         </select>
                         <div class="invalid-feedback" id="lblError">Campo Requerido</div>

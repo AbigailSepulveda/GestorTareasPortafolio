@@ -116,14 +116,17 @@
                                 @if (Model.Modules.Contains("5")) {
                                     <a class="nav-link active" href="#"><i class="fa fa-fw fa-search"></i>Alertas <span class="badge badge-success">6</span></a>
                                 }
+                                @if (Model.Modules.Contains("4")) {
+                                    <a class="nav-link active" href="~/Tasks/Index"><i class="fa fa-fw fa-file-archive"></i>Procesos <span class="badge badge-success">6</span></a>
+                                }
                                 @if (Model.Modules.Contains("1")) {
                                     <a class="nav-link active" href="~/Tasks/Create"><i class="fa fa-fw fa-file-archive"></i>Crear Tarea<span class="badge badge-success">6</span></a>
                                 }
                                 @if (Model.Modules.Contains("2")) {
-                                    <a class="nav-link active" href="~/Tasks/Index"><i class="fa fa-fw fa-file-archive"></i>Tareas <span class="badge badge-success">6</span></a>
+                                    <a class="nav-link active" href="~/Tasks/Index"><i class="fa fa-fw fa-file-archive"></i>Mis Tareas <span class="badge badge-success">6</span></a>
                                 }
-                                @if (Model.Modules.Contains("4")) {
-                                    <a class="nav-link active" href="#"><i class="fa fa-fw fa-search"></i>Procesos <span class="badge badge-success">6</span></a>
+                                @if (Model.Modules.Contains("6")) {
+                                    <a class="nav-link active" href="~/Tasks/Index"><i class="fa fa-fw fa-file-archive"></i>Mi Unidad<span class="badge badge-success">6</span></a>
                                 }
                                 @if (Model.Modules.Contains("3")) {
                                     <a class="nav-link active" href="#"><i class="fa fa-fw fa-search"></i>Backlog <span class="badge badge-success">6</span></a>

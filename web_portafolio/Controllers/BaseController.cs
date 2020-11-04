@@ -13,6 +13,7 @@ namespace web_portafolio.Controllers {
         public readonly String endPointUser = "User/";
         public readonly String endPointTask = "Task/";
         public readonly String endPointProcess = "Process/";
+        public readonly String formatDate = "dd/MM/yyyy";
 
         protected HttpClient getClient(String token = "") {
             HttpClient client = new HttpClient();
