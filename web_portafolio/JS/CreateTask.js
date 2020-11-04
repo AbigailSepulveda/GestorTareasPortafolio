@@ -15,10 +15,23 @@
     });
 });
 
+function cleanInputs() {
+    $("#modalNroDenuncio").removeAttr('readonly');
+    $("#nombre").val('');
+    $("#descripcion").val('');
+    $("#padre").val('-1');
+    $("#proceso").val('-1');
+    $("#responsable").val('-1');
+    $("#fechaInicio").val('');
+    $("#fechaInicio").val('');
+    document.getElementById('FileUpload1').value = ''
+}
+
 function createTask() {
     var nombre = $("#nombre").val();
     var descripcion = $("#descripcion").val();
     var responsableId = $("#responsable").val();
+    var processId = $("#proceso").val();
     var taskId = $("#padre").val();
     var state = $("#estado").val();
     var start = $("#fechaInicio").val();
@@ -37,6 +50,7 @@ function createTask() {
             'nombre=' + nombre +
             '&descripcion=' + descripcion +
             '&responsableId=' + responsableId +
+            '&process=' + processId +
             '&taskId=' + taskId +
             '&state=' + state +
             '&start=' + start +
@@ -49,7 +63,6 @@ function createTask() {
         success: function (resultData) {
             setTimeout(hideModalLoading, 800);
             if (resultData.isReady) {
-                loadData();
                 Swal.fire({
                     title: "REALIZADO",
                     text: resultData.msg,

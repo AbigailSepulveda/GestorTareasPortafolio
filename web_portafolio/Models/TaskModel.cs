@@ -16,6 +16,7 @@ namespace web_portafolio.Models {
         public long fatherTaksId { get; set; }
         public long processId { get; set; }
         public ProcessModel process { get; set; }
-        public String path { get; set; }
+        public DocumentModel document { get; set; }
+        public long assingId { get; set; }
     }
 }

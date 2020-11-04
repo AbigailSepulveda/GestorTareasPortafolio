@@ -1,0 +1,183 @@
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using web_portafolio.Models;
+using web_portafolio.Models.Response;
+
+namespace web_portafolio.Controllers {
+    public class TasksController : BaseController {
+        // GET: Tasks
+        public ActionResult Index() {
+            if (User.Identity.IsAuthenticated) {
+                return View(getHomeViewModel());
+            } else {
+                return RedirectToAction("Login", "Auth");
+            }
+        }
+
+        public async Task<List<User>> getUsersByUnitForSelect(string token, string unitId) {
+            List<User> users = new List<User>();
+            try {
+                using (var client = getClient(token)) {
+                    var getTask = client.GetAsync(endPointUser + "/getAllByUnit?unit_id= " + unitId);
+                    getTask.Wait();
+
+                    HttpResponseMessage response = getTask.Result;
+                    if (response.IsSuccessStatusCode) {
+                        response.EnsureSuccessStatusCode();
+                        var responseAsString = response.Content.ReadAsStringAsync();
+                        responseAsString.Wait();
+                        var resultRemote = JsonConvert.DeserializeObject<BaseResponse<List<User>>>(responseAsString.Result);
+
+                        if (resultRemote.success) {
+                            users = resultRemote.data;
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                ViewBag.msg = "Error: " + e.Message.ToString();
+            }
+
+            return users;
+        }
+
+        public async Task<List<TaskModel>> getTasksByUser(string token, string id) {
+            List<TaskModel> tasks = new List<TaskModel>();
+            try {
+                using (var client = getClient(token)) {
+                    var getTask = client.GetAsync(endPointTask + "/getTasksByUser?id= " + id);
+                    getTask.Wait();
+
+                    HttpResponseMessage response = getTask.Result;
+                    if (response.IsSuccessStatusCode) {
+                        response.EnsureSuccessStatusCode();
+                        var responseAsString = response.Content.ReadAsStringAsync();
+                        responseAsString.Wait();
+                        var resultRemote = JsonConvert.DeserializeObject<BaseResponse<List<TaskModel>>>(responseAsString.Result);
+
+                        if (resultRemote.success) {
+                            tasks = resultRemote.data;
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                ViewBag.msg = "Error: " + e.Message.ToString();
+            }
+
+            return tasks;
+        }
+
+        public async Task<List<ProcessModel>> getProcessByUser(string token, string id) {
+            List<ProcessModel> tasks = new List<ProcessModel>();
+            try {
+                using (var client = getClient(token)) {
+                    var getProcess = client.GetAsync(endPointProcess + "/getProcessByUser?id= " + id);
+                    getProcess.Wait();
+
+                    HttpResponseMessage response = getProcess.Result;
+                    if (response.IsSuccessStatusCode) {
+                        response.EnsureSuccessStatusCode();
+                        var responseAsString = response.Content.ReadAsStringAsync();
+                        responseAsString.Wait();
+                        var resultRemote = JsonConvert.DeserializeObject<BaseResponse<List<ProcessModel>>>(responseAsString.Result);
+
+                        if (resultRemote.success) {
+                            tasks = resultRemote.data;
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                ViewBag.msg = "Error: " + e.Message.ToString();
+            }
+
+            return tasks;
+        }
+
+        public ActionResult Create() {
+            if (User.Identity.IsAuthenticated) {
+                return View(getHomeViewModel());
+            } else {
+                return RedirectToAction("Login", "Auth");
+            }
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> createTask(String nombre, String descripcion,
+                                                 String responsableId, String process,
+                                                 String taskId, String state,
+                                                 String start, String end) {
+            try {
+                var identity = getHomeViewModel();
+                string fileP = "";
+                string fileName = "";
+                string localPath = "";
+                string urlPath = System.Web.HttpContext.Current.Server.MapPath("~");
+                bool fileExist = false;
+                for (int i = 0; i < Request.Files.Count; i++) {
+                    var file = Request.Files[i];
+                    fileName = Path.GetFileName(file.FileName);
+                    localPath = ConfigurationManager.AppSettings["LOCAL_PATH_TEMP"].ToString();
+
+                    bool exists = Directory.Exists(Server.MapPath(localPath));
+
+                    if (!exists) {
+                        Directory.CreateDirectory(Server.MapPath(localPath));
+                    }
+
+                    fileP = Path.Combine((urlPath + localPath), fileName);
+                    //file.SaveAs(fileP);
+                    fileExist = true;
+                }
+
+                TaskModel taskModel = new TaskModel();
+                taskModel.dateStart = start;
+                taskModel.dateEnd = end;
+                taskModel.name = nombre;
+                taskModel.description = descripcion;
+                taskModel.fatherTaksId = int.Parse(taskId);
+                taskModel.taskStatusId = state;
+                if (fileExist) {
+                    DocumentModel document = new DocumentModel();
+                    document.name = fileName;
+                    document.url = urlPath;
+                    document.path = localPath;
+                    taskModel.document = document;
+                }
+                taskModel.creatorUserId = int.Parse(identity.Id);
+                taskModel.processId = int.Parse(process);
+                taskModel.assingId = int.Parse(responsableId);
+                taskModel.creatorUserId = int.Parse(identity.Id);
+
+                var json = JsonConvert.SerializeObject(taskModel);
+                var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+                using (var client = getClient(identity.Token)) {
+                    var postTask = client.PostAsync(endPointTask + "/createTask", data);
+                    postTask.Wait();
+                    HttpResponseMessage response = postTask.Result;
+                    if (response.IsSuccessStatusCode) {
+                        response.EnsureSuccessStatusCode();
+                        var responseAsString = response.Content.ReadAsStringAsync();
+                        responseAsString.Wait();
+                        var resultRemote = JsonConvert.DeserializeObject<BaseResponse<object>>(responseAsString.Result);
+
+                        if (resultRemote.success) {
+                            return Json(new { isReady = true, msg = resultRemote.message }, JsonRequestBehavior.AllowGet);
+                        } else {
+                            return Json(new { isReady = false, msg = resultRemote.message }, JsonRequestBehavior.AllowGet);
+                        }
+                    }
+                }
+                return Json(new { isReady = true, msg = "" }, JsonRequestBehavior.AllowGet);
+            } catch (Exception e) {
+                return Json(new { isReady = false, msg = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+        }
+    }
+}

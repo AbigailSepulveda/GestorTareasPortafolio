@@ -12,6 +12,7 @@ namespace web_portafolio.Controllers {
         private readonly String baseURL = "http://192.168.0.165:52834/api/";
         public readonly String endPointUser = "User/";
         public readonly String endPointTask = "Task/";
+        public readonly String endPointProcess = "Process/";
 
         protected HttpClient getClient(String token = "") {
             HttpClient client = new HttpClient();

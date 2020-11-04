@@ -231,6 +231,7 @@
     <Compile Include="Models\Response\BaseResponse.cs" />
     <Compile Include="Models\Rol.cs" />
     <Compile Include="Models\ProcessModel.cs" />
+    <Compile Include="Models\DocumentModel.cs" />
     <Compile Include="Models\TaskStatus.cs" />
     <Compile Include="Models\TypeAlert.cs" />
     <Compile Include="Models\TaskModel.cs" />
