@@ -1,0 +1,152 @@
+﻿
+@model web_portafolio.Models.ViewModelBase
+@{
+    ViewBag.Title = "Tipo de Proceso";
+    List<web_portafolio.Models.User> usuarios = new web_portafolio.Controllers.TasksController().getUsersByUnitForSelect(Model.Token, Model.Unit).Result;
+    List<web_portafolio.Models.TaskModel> tasks = new web_portafolio.Controllers.TasksController().getTasksByUser(Model.Token, Model.Id).Result;
+}
+
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="page-header">
+        </div>
+
+        <div class="row">
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-12">
+
+            </div>
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-8 col-12" align="left">
+                <h2>Crear Tipo de Proceso</h2>
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-12">
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-12">
+
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4 col-12">
+                <div class="card">
+                    <div class="card-title">
+                        <h5 class="card-header">Datos del Proceso</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+                                <label for="nombreProceso" class="col-form-label">Nombre</label>
+                                <input type="text" id="nombreProceso" class="form-control" placeholder="" style="text-transform:capitalize" maxlength="255" />
+                                <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                            </div>
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+                                <label for="descripcionProceso" class="col-form-label">Descripcion</label>
+                                <input type="text" id="descripcionProceso" class="form-control" placeholder="" maxlength="255" />
+                                <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4 col-12">
+                <div class="card">
+                    <div class="card-title">
+                        <h5 class="card-header">Agregar Tarea</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+                                <label for="nombreTarea" class="col-form-label">Nombre</label>
+                                <input type="text" id="nombreTarea" class="form-control" placeholder="" style="text-transform:capitalize" maxlength="255" />
+                                <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                            </div>
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+                                <label for="descripcionTarea" class="col-form-label">Descripcion</label>
+                                <input type="text" id="descripcionTarea" class="form-control" placeholder="" maxlength="255" />
+                                <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 col-12">
+                                <label for="estadoTarea" class="col-form-label">Estado</label>
+                                <select class="form-control" id="estadoTarea" disabled>
+                                    <option value="0">Pendiente</option>
+                                </select>
+                                <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 col-12">
+                                <label for="fechaTerminoTarea" class="col-form-label">Termino</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                    </span>
+                                    <input id="fechaTerminoTarea" type="text" class="form-control">
+                                    <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12" align="right">
+                            <br />
+                            <button class="btn btn-outline-success" onclick="addTask();" style="width:150px;">Agregar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-12">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-12">
+
+            </div>
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-8 col-12">
+                <div class="card">
+                    <div class="card-title">
+                        <h5 class="card-header">Tareas</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="tableTasks" class="table table-bordered" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Descripción</th>
+                                        <th>Fecha Termino</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-12">
+
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-12">
+
+            </div>
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-8 col-12" align="right">
+
+                <div class="form-row" align="right">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12" align="right">
+                        <button class="btn btn-light" onclick="cleanInputs();" style="width:150px;">Limpiar</button>
+                        <button class="btn btn-outline-success" onclick="addProcess();" style="width:150px;">Guardar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-12">
+
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/TemplateProcess")

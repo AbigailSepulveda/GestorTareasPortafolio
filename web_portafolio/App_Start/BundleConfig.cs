@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
-namespace web_portafolio
-{
-    public class BundleConfig
-    {
+namespace web_portafolio {
+    public class BundleConfig {
         // Para obtener más información sobre las uniones, visite https://go.microsoft.com/fwlink/?LinkId=301862
-        public static void RegisterBundles(BundleCollection bundles)
-        {
+        public static void RegisterBundles(BundleCollection bundles) {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Content/assets/vendor/jquery/jquery-3.3.1.min.js"));
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
@@ -110,6 +104,12 @@ namespace web_portafolio
             ));
             bundles.Add(new ScriptBundle("~/bundles/Tasks/Create").Include(
             "~/JS/CreateTask.js"
+            ));
+            bundles.Add(new ScriptBundle("~/bundles/Process/Create").Include(
+            "~/JS/CreateProcess.js"
+            ));
+            bundles.Add(new ScriptBundle("~/bundles/TemplateProcess").Include(
+            "~/JS/TemplateProcess.js"
             ));
         }
     }
