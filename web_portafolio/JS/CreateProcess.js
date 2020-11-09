@@ -1,62 +1,25 @@
-﻿$(document).ready(function () {
-    $('#fechaInicio').datepicker({
-        format: "dd/mm/yyyy",
-        todayBtn: "linked",
-        clearBtn: true,
-        language: "es",
-        autoclose: true
-    });
-    $('#fechaTermino').datepicker({
-        format: "dd/mm/yyyy",
-        todayBtn: "linked",
-        clearBtn: true,
-        language: "es",
-        autoclose: true
-    });
-});
-
-function cleanInputs() {
+﻿function cleanInputs() {
     $("#nombre").val('');
     $("#descripcion").val('');
-    $("#padre").val('-1');
-    $("#proceso").val('-1');
-    $("#responsable").val('-1');
-    $("#fechaInicio").val('');
-    $("#fechaTermino").val('');
-    document.getElementById('FileUpload1').value = '';
 }
 
-function createTask() {
+function createProcess() {
     var nombre = $("#nombre").val();
     var descripcion = $("#descripcion").val();
-    var responsableId = $("#responsable").val();
-    var processId = $("#proceso").val();
-    var taskId = $("#padre").val();
-    var state = $("#estado").val();
-    var end = $("#fechaTermino").val();
-
-    var formData = new FormData();
-    var file1 = document.getElementById("FileUpload1").files[0];
-    formData.append("FileUpload1", file1);
 
     $.ajax({
         async: true,
         beforeSend: function () {
             showModalLoading('PROCESANDO INFORMACIÓN');
         },
-        url: baseUrl + '/Tasks/createTask?' +
-            'nombre=' + nombre +
-            '&descripcion=' + descripcion +
-            '&responsableId=' + responsableId +
-            '&process=' + processId +
-            '&taskId=' + taskId +
-            '&state=' + state +
-            '&end=' + end
+        url: baseUrl + '/Process/createProcess'
         ,
         method: 'POST',
-        contentType: false,
-        processData: false,
-        data: formData,
+        data: {
+            name: nombre,
+            description: descripcion
+        },
+        dataType: 'json',
         success: function (resultData) {
             setTimeout(hideModalLoading, 800);
             if (resultData.isReady) {

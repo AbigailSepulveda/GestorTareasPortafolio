@@ -105,11 +105,23 @@ namespace web_portafolio {
             bundles.Add(new ScriptBundle("~/bundles/Tasks/Create").Include(
             "~/JS/CreateTask.js"
             ));
+
+            bundles.Add(new ScriptBundle("~/bundles/Tasks/Workload").Include(
+            "~/JS/Workload.js"
+            ));
+
             bundles.Add(new ScriptBundle("~/bundles/Process/Create").Include(
             "~/JS/CreateProcess.js"
             ));
-            bundles.Add(new ScriptBundle("~/bundles/TemplateProcess").Include(
-            "~/JS/TemplateProcess.js"
+            bundles.Add(new ScriptBundle("~/bundles/Process/List").Include(
+            "~/JS/ListProcess.js"
+            ));
+
+            bundles.Add(new ScriptBundle("~/bundles/Template/TemplateCreate").Include(
+            "~/JS/TemplateCreate.js"
+            ));
+            bundles.Add(new ScriptBundle("~/bundles/Template/TemplateShow").Include(
+            "~/JS/TemplateShow.js"
             ));
         }
     }

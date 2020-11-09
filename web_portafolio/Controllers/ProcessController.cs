@@ -12,7 +12,7 @@ using web_portafolio.Models.Request;
 using web_portafolio.Models.Response;
 
 namespace web_portafolio.Controllers {
-    public class TemplateController : BaseController {
+    public class ProcessController : BaseController {
         // GET: Tasks
         public ActionResult Create() {
             if (User.Identity.IsAuthenticated) {
@@ -23,7 +23,7 @@ namespace web_portafolio.Controllers {
         }
 
         // GET: Tasks
-        public ActionResult Show() {
+        public ActionResult Backlog() {
             if (User.Identity.IsAuthenticated) {
                 return View(getHomeViewModel());
             } else {
@@ -66,86 +66,19 @@ namespace web_portafolio.Controllers {
         }
 
         [HttpPost]
-        public async Task<JsonResult> createProcess(Template template) {
+        public async Task<JsonResult> createProcess(string name, string description, int[] tasks) {
             try {
                 var identity = getHomeViewModel();
-                template.userId = long.Parse(identity.Id);
+                CreateProcessRequest request = new CreateProcessRequest();
+                request.name = name;
+                request.description = description;
+                request.user_id = long.Parse(identity.Id);
 
-                foreach (TemplateTask templateTask in template.tasks) {
-                    templateTask.userId = long.Parse(identity.Id);
-                }
-
-                var json = JsonConvert.SerializeObject(template);
-                var data = new StringContent(json, Encoding.UTF8, "application/json");
-
-                using (var client = getClient(identity.Token)) {
-                    var postTask = client.PostAsync(endPointTemplate + "/insert", data);
-                    postTask.Wait();
-                    HttpResponseMessage response = postTask.Result;
-                    if (response.IsSuccessStatusCode) {
-                        response.EnsureSuccessStatusCode();
-                        var responseAsString = response.Content.ReadAsStringAsync();
-                        responseAsString.Wait();
-                        var resultRemote = JsonConvert.DeserializeObject<BaseResponse<object>>(responseAsString.Result);
-
-                        if (resultRemote.success) {
-                            return Json(new { isReady = true, msg = resultRemote.message }, JsonRequestBehavior.AllowGet);
-                        } else {
-                            return Json(new { isReady = false, msg = resultRemote.message }, JsonRequestBehavior.AllowGet);
-                        }
-                    }
-                }
-                return Json(new { isReady = true, msg = "" }, JsonRequestBehavior.AllowGet);
-            } catch (Exception e) {
-                return Json(new { isReady = false, msg = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-        [HttpGet]
-        public async Task<JsonResult> getAllByUnitId() {
-            List<ListProcessModel> tasks = new List<ListProcessModel>();
-            try {
-                var identity = getHomeViewModel();
-                using (var client = getClient(identity.Token)) {
-                    var getTask = client.GetAsync(endPointTemplate + "/getAllByUnit?unit_id= " + identity.Unit);
-                    getTask.Wait();
-
-                    HttpResponseMessage response = getTask.Result;
-                    if (response.IsSuccessStatusCode) {
-                        response.EnsureSuccessStatusCode();
-                        var responseAsString = response.Content.ReadAsStringAsync();
-                        responseAsString.Wait();
-                        var resultRemote = JsonConvert.DeserializeObject<BaseResponse<List<ProcessModel>>>(responseAsString.Result);
-
-                        if (resultRemote.success) {
-                            var remoteTasks = resultRemote.data;
-                            tasks = remoteTasks.Select(x => new ListProcessModel() {
-                                id = x.id,
-                                name = x.name,
-                                description = x.description,
-                                n_tasks = x.n_tasks
-                            }).ToList();
-                        }
-                    }
-                }
-                return Json(new { isReady = true, list = tasks, msg = "" }, JsonRequestBehavior.AllowGet);
-            } catch (Exception e) {
-                return Json(new { isReady = false, msg = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-        [HttpPost]
-        public async Task<JsonResult> startProcess(decimal id) {
-            try {
-                var identity = getHomeViewModel();
-                TempalteStartRequest request = new TempalteStartRequest();
-                request.userId = decimal.Parse(identity.Id);
-                request.id = id;
                 var json = JsonConvert.SerializeObject(request);
                 var data = new StringContent(json, Encoding.UTF8, "application/json");
 
                 using (var client = getClient(identity.Token)) {
-                    var postTask = client.PostAsync(endPointTemplate + "/start", data);
+                    var postTask = client.PostAsync(endPointProcess + "/createProcess", data);
                     postTask.Wait();
                     HttpResponseMessage response = postTask.Result;
                     if (response.IsSuccessStatusCode) {
@@ -153,7 +86,7 @@ namespace web_portafolio.Controllers {
                         var responseAsString = response.Content.ReadAsStringAsync();
                         responseAsString.Wait();
                         var resultRemote = JsonConvert.DeserializeObject<BaseResponse<object>>(responseAsString.Result);
-
+                
                         if (resultRemote.success) {
                             return Json(new { isReady = true, msg = resultRemote.message }, JsonRequestBehavior.AllowGet);
                         } else {

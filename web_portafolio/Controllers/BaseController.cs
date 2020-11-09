@@ -9,8 +9,8 @@ using web_portafolio.Models;
 namespace web_portafolio.Controllers {
     public abstract class BaseController : Controller {
 
-        //private readonly String baseURL = "http://192.168.0.165:52834/api/";
-        private readonly String baseURL = "http://192.168.1.98:52834/api/";
+        private readonly String baseURL = "http://192.168.0.165:52834/api/";
+        //private readonly String baseURL = "http://192.168.1.86:52834/api/";
         public readonly String endPointUser = "User/";
         public readonly String endPointTask = "Task/";
         public readonly String endPointProcess = "Process/";

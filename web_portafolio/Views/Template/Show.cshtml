@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Procesos";
+}
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="page-header">
+            <p class="pageheader-text"><div id="lblTitle"><h2 class="pageheader-title">Procesos</h2></div></p>
+        </div>
+    </div>
+
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+        <div class="card">
+            <div class="card-title">
+                <h5 class="card-header">Procesos</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="tableProcess" class="table table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>N. de Tareas</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/Template/TemplateShow")

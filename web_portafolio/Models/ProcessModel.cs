@@ -9,6 +9,7 @@ namespace web_portafolio.Models {
         public DateTime created_at { get; set; }
         public DateTime updated_at { get; set; }
         public DateTime finished { get; set; }
-        public long user_id { get; set; }
+        public long userId { get; set; }
+        public int n_tasks { get; set; }
     }
 }

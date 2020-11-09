@@ -1,0 +1,67 @@
+﻿
+@model web_portafolio.Models.ViewModelBase
+@{
+    ViewBag.Title = "Proceso";
+    List<web_portafolio.Models.User> usuarios = new web_portafolio.Controllers.TasksController().getUsersByUnitForSelect(Model.Token, Model.Unit).Result;
+    List<web_portafolio.Models.TaskModel> tasks = new web_portafolio.Controllers.TasksController().getTasksByUser(Model.Token, Model.Id).Result;
+}
+
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="page-header">
+        </div>
+
+        <div class="row">
+
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-12">
+
+            </div>
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-8 col-12" align="left">
+                <h2>Crear Proceso</h2>
+            </div>
+
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-12">
+
+            </div>
+
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-12">
+
+            </div>
+
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-8 col-12">
+                <div class="card">
+                    <div class="card-title">
+                        <h5 class="card-header">Datos del Proceso</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+                                <label for="nombre" class="col-form-label">Nombre</label>
+                                <input type="text" id="nombre" class="form-control" placeholder="" style="text-transform:capitalize" maxlength="255" />
+                                <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                            </div>
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+                                <label for="descripcion" class="col-form-label">Descripcion</label>
+                                <input type="text" id="descripcion" class="form-control" placeholder="" maxlength="255" />
+                                <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row" align="right">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12" align="right">
+                        <button class="btn btn-light" onclick="cleanInputs();" style="width:150px;">Limpiar</button>
+                        <button class="btn btn-outline-success" onclick="createProcess();" style="width:150px;">Guardar</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-12">
+
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/Process/Create")
