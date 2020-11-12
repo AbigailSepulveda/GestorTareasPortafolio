@@ -849,6 +849,7 @@
     <Content Include="Content\FileUpload\dist\less\file-upload.less" />
     <Content Include="Content\SelectSearch\css\bootstrap-select.css.map" />
     <Content Include="Content\SelectSearch\js\bootstrap-select.js.map" />
+    <Content Include="JS\Backlog.js" />
     <Content Include="JS\Workload.js" />
     <Content Include="JS\TemplateShow.js" />
     <Content Include="JS\TemplateCreate.js" />

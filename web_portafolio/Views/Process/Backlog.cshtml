@@ -48,10 +48,12 @@
                     <table id="tableTasks" class="table table-bordered" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                                <th>Informacion</th>
-                                <th>Fechas</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
+                                <th>Nombre</th>
+                                <th>Descripcion</th>
+                                <th>Proceso</th>
+                                <th>Fecha Limite</th>
+                                <th>Documentos</th>
+                                <th>Seleccionar</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -84,7 +86,7 @@
                             <span class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                             </span>
-                            <input id="fechaInicio" type="text" class="form-control">
+                            <input id="fechaInicio" type="text" class="form-control" readonly>
                             <div class="invalid-feedback" id="lblError">Campo Requerido</div>
                         </div>
                     </div>
@@ -95,7 +97,7 @@
                             <span class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                             </span>
-                            <input id="fechaTermino" type="text" class="form-control">
+                            <input id="fechaTermino" type="text" class="form-control" readonly>
                             <div class="invalid-feedback" id="lblError">Campo Requerido</div>
                         </div>
                     </div>
@@ -104,7 +106,7 @@
                         <select class="form-control" id="estado">
                             <option value="-1">Seleccionar</option>
                             <option value="0">Pendiente</option>
-                            <option value="1">Trabajando</option>
+                            <option value="4">Trabajando</option>
                             <option value="2">Realizado</option>
                             <option value="3">Rechazado</option>
                         </select>
@@ -129,7 +131,7 @@
             <div id="sparkline-revenue"></div>
             <div class="form-row" align="right">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12" align="right">
-                    <button class="btn btn-dark" onclick="cleanInputs();" style="width:150px;">Documentos</button>
+                    <button class="btn btn-dark" onclick="showModal();" style="width:150px;">Documentos</button>
                     &nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;
                     <button class="btn btn-success" onclick="create();" style="width:150px;">Actualizar</button>
@@ -139,4 +141,30 @@
     </div>
 </div>
 
-@Scripts.Render("~/bundles/Tasks/Index")
+<div class="modal fade" id="modalDocuments" tabindex="-1" role="dialog" aria-labelledby="modalDocumentsLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDocumentsLabel">Documentos</h5>
+                <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table id="tableDocuments" class="table table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Descargar</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/Process/Backlog")

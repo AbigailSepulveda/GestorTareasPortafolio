@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,12 +31,39 @@ namespace web_portafolio.Controllers {
         }
 
         [HttpGet]
-        public async Task<JsonResult> getTasksByUserId() {
-            List<ListTaskModel> tasks = new List<ListTaskModel>();
+        public async Task<JsonResult> getTasksById(decimal id) {
+            TaskModel tasks = new TaskModel();
             try {
                 var identity = getHomeViewModel();
                 using (var client = getClient(identity.Token)) {
-                    var getTask = client.GetAsync(endPointTask + "/getTasksByUser?id= " + identity.Id);
+                    var getTask = client.GetAsync(endPointTask + "/getByTaskId?id= " + id);
+                    getTask.Wait();
+
+                    HttpResponseMessage response = getTask.Result;
+                    if (response.IsSuccessStatusCode) {
+                        response.EnsureSuccessStatusCode();
+                        var responseAsString = response.Content.ReadAsStringAsync();
+                        responseAsString.Wait();
+                        var resultRemote = JsonConvert.DeserializeObject<BaseResponse<TaskModel>>(responseAsString.Result);
+
+                        if (resultRemote.success) {
+                            tasks = resultRemote.data;
+                        }
+                    }
+                }
+                return Json(new { isReady = true, list = tasks, msg = "" }, JsonRequestBehavior.AllowGet);
+            } catch (Exception e) {
+                return Json(new { isReady = false, msg = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> getTasksByProcessId(decimal id) {
+            List<TaskModel> tasks = new List<TaskModel>();
+            try {
+                var identity = getHomeViewModel();
+                using (var client = getClient(identity.Token)) {
+                    var getTask = client.GetAsync(endPointTask + "/getTasksByProcessId?id= " + id);
                     getTask.Wait();
 
                     HttpResponseMessage response = getTask.Result;
@@ -48,14 +74,34 @@ namespace web_portafolio.Controllers {
                         var resultRemote = JsonConvert.DeserializeObject<BaseResponse<List<TaskModel>>>(responseAsString.Result);
 
                         if (resultRemote.success) {
-                            var remoteTasks = resultRemote.data;
-                            tasks = remoteTasks.Select(x => new ListTaskModel() {
-                                id = x.id,
-                                name = x.name,
-                                description = x.description,
-                                date = ((DateTime)x.dateEnd).ToString(formatDate).Replace("-", "/"),
-                                state = x.taskStatusId == "0" ? "Pendiente" : x.taskStatusId == "1" ? "Trabajando" : x.taskStatusId == "2" ? "Realizado" : x.taskStatusId == "3" ? "Rechazado" : ""
-                            }).ToList();
+                            tasks = resultRemote.data;
+                        }
+                    }
+                }
+                return Json(new { isReady = true, list = tasks, msg = "" }, JsonRequestBehavior.AllowGet);
+            } catch (Exception e) {
+                return Json(new { isReady = false, msg = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> getProcessByUnit() {
+            List<ListProcessModel> tasks = new List<ListProcessModel>();
+            try {
+                var identity = getHomeViewModel();
+                using (var client = getClient(identity.Token)) {
+                    var getTask = client.GetAsync(endPointProcess + "/getBacklogByUnit?unit_id= " + identity.Unit);
+                    getTask.Wait();
+
+                    HttpResponseMessage response = getTask.Result;
+                    if (response.IsSuccessStatusCode) {
+                        response.EnsureSuccessStatusCode();
+                        var responseAsString = response.Content.ReadAsStringAsync();
+                        responseAsString.Wait();
+                        var resultRemote = JsonConvert.DeserializeObject<BaseResponse<List<ListProcessModel>>>(responseAsString.Result);
+
+                        if (resultRemote.success) {
+                            tasks = resultRemote.data;
                         }
                     }
                 }
@@ -86,7 +132,7 @@ namespace web_portafolio.Controllers {
                         var responseAsString = response.Content.ReadAsStringAsync();
                         responseAsString.Wait();
                         var resultRemote = JsonConvert.DeserializeObject<BaseResponse<object>>(responseAsString.Result);
-                
+
                         if (resultRemote.success) {
                             return Json(new { isReady = true, msg = resultRemote.message }, JsonRequestBehavior.AllowGet);
                         } else {

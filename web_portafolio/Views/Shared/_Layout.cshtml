@@ -111,27 +111,66 @@
                             <li class="nav-item ">
                                 <a class="nav-link active" href="@(Url.Action("Index", "Home"))"><i class="fa fa-fw fa-home"></i>Inicio <span class="badge badge-success">6</span></a>
                             </li>
-                            <li class="nav-divider">
-                                Procesos
-                            </li>
-                            <li class="nav-item ">
-                                <a class="nav-link active" href="~/Process/Backlog"><i class="fa fa-fw fa-file-archive"></i>Backlog<span class="badge badge-success">6</span></a>
-                                <a class="nav-link active" href="~/Process/Create"><i class="fa fa-fw fa-file-archive"></i>Crear<span class="badge badge-success">6</span></a>
-                            </li>
-                            <li class="nav-divider">
-                                Tareas
-                            </li>
-                            <li class="nav-item ">
-                                <a class="nav-link active" href="~/Tasks/Workload"><i class="fa fa-fw fa-file-archive"></i>Asignaciones<span class="badge badge-success">6</span></a>
-                                <a class="nav-link active" href="~/Tasks/Create"><i class="fa fa-fw fa-file-archive"></i>Crear<span class="badge badge-success">6</span></a>
-                            </li>
-                            <li class="nav-divider">
-                                Tipo de Procesos
-                            </li>
-                            <li class="nav-item ">
-                                <a class="nav-link active" href="~/Template/Show"><i class="fa fa-fw fa-file-archive"></i>Ver<span class="badge badge-success">6</span></a>
-                                <a class="nav-link active" href="~/Template/Create"><i class="fa fa-fw fa-file-archive"></i>Crear<span class="badge badge-success">6</span></a>
-                            </li>
+
+                            @{
+                                if (Model.Modules.Contains("1") || Model.Modules.Contains("2")) {
+                                    <li class="nav-divider">
+                                        Procesos
+                                    </li>
+                                    <li class="nav-item ">
+                                        @{
+                                            if (Model.Modules.Contains("1")) {
+                                                <a class="nav-link active" href="~/Process/Backlog"><i class="fa fa-fw fa-file-archive"></i>Backlog<span class="badge badge-success">6</span></a>
+                                            }
+                                        }
+                                        @{
+                                            if (Model.Modules.Contains("2")) {
+                                                <a class="nav-link active" href="~/Process/Create"><i class="fa fa-fw fa-file-archive"></i>Crear<span class="badge badge-success">6</span></a>
+                                            }
+                                        }
+                                    </li>
+                                }
+                            }
+
+                            @{
+                                if (Model.Modules.Contains("3") || Model.Modules.Contains("4")) {
+                                    <li class="nav-divider">
+                                        Tareas
+                                    </li>
+                                    <li class="nav-item ">
+                                        @{
+                                            if (Model.Modules.Contains("3")) {
+                                                <a class="nav-link active" href="~/Tasks/Workload"><i class="fa fa-fw fa-file-archive"></i>Asignaciones<span class="badge badge-success">6</span></a>
+                                            }
+                                        }
+                                        @{
+                                            if (Model.Modules.Contains("4")) {
+                                                <a class="nav-link active" href="~/Tasks/Create"><i class="fa fa-fw fa-file-archive"></i>Crear<span class="badge badge-success">6</span></a>
+                                            }
+                                        }
+                                    </li>
+                                }
+                            }
+
+                            @{
+                                if (Model.Modules.Contains("5") || Model.Modules.Contains("6")) {
+                                    <li class="nav-divider">
+                                        Tipo de Procesos
+                                    </li>
+                                    <li class="nav-item ">
+                                        @{
+                                            if (Model.Modules.Contains("5")) {
+                                                <a class="nav-link active" href="~/Template/Show"><i class="fa fa-fw fa-file-archive"></i>Ver<span class="badge badge-success">6</span></a>
+                                            }
+                                        }
+                                        @{
+                                            if (Model.Modules.Contains("6")) {
+                                                <a class="nav-link active" href="~/Template/Create"><i class="fa fa-fw fa-file-archive"></i>Crear<span class="badge badge-success">6</span></a>
+                                            }
+                                        }
+                                    </li>
+                                }
+                            }
                             <li class="nav-divider">
                                 Sesión
                             </li>

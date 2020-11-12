@@ -22,5 +22,6 @@ namespace web_portafolio.Models {
         public DocumentModel document { get; set; }
         public List<DocumentModel> documents { get; set; }
         public long assingId { get; set; }
+        public int alert { get; set; }
     }
 }

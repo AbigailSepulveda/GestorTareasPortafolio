@@ -67,7 +67,7 @@ function addTask() {
 function cleanTask() {
     $("#nombreTarea").val('');
     $("#descripcionTarea").val('');
-    $("#estadoTarea").val('');
+    $("#estadoTarea").val('0');
     $("#fechaTerminoTarea").val('');
 }
 

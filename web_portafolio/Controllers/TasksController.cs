@@ -154,7 +154,7 @@ namespace web_portafolio.Controllers {
                 if (fileExist) {
                     DocumentModel document = new DocumentModel();
                     document.name = fileName;
-                    document.url = urlPath;
+                    document.url = ConfigurationManager.AppSettings["PUBLIC_PATH_TEMP"].ToString();
                     document.path = localPath;
                     taskModel.document = document;
                 }
@@ -222,6 +222,7 @@ namespace web_portafolio.Controllers {
                 TaskModel taskModel = new TaskModel();
                 taskModel.id = id;
                 taskModel.description = message;
+                taskModel.creatorUserId = long.Parse(identity.Id + "");
 
                 var json = JsonConvert.SerializeObject(taskModel);
                 var data = new StringContent(json, Encoding.UTF8, "application/json");
@@ -256,6 +257,7 @@ namespace web_portafolio.Controllers {
 
                 TaskModel taskModel = new TaskModel();
                 taskModel.id = id;
+                taskModel.creatorUserId = long.Parse(identity.Id + "");
 
                 var json = JsonConvert.SerializeObject(taskModel);
                 var data = new StringContent(json, Encoding.UTF8, "application/json");
