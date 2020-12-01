@@ -1,6 +1,5 @@
 ﻿$(document).ready(function () {
     initTable();
-    loadData();
 });
 
 function initTable() {
@@ -88,6 +87,12 @@ function initTable() {
     loadData1();
     loadData2();
     loadData3();
+    window.setInterval(function () {
+        console.log("holi");
+        loadData1();
+        loadData2();
+        loadData3();
+    }, 60000);
 }
 
 function loadData1() {
