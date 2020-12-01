@@ -250,6 +250,90 @@ namespace web_portafolio.Controllers {
             }
         }
 
+        [HttpGet]
+        public async Task<JsonResult> getTaskRed() {
+            List<TaskModel> task = new List<TaskModel>();
+            try {
+                var identity = getHomeViewModel();
+                using (var client = getClient(identity.Token)) {
+                    var getTask = client.GetAsync(endPointTask + "/getTaskRed?unit_id= " + identity.Unit);
+                    getTask.Wait();
+
+                    HttpResponseMessage response = getTask.Result;
+                    if (response.IsSuccessStatusCode) {
+                        response.EnsureSuccessStatusCode();
+                        var responseAsString = response.Content.ReadAsStringAsync();
+                        responseAsString.Wait();
+                        var resultRemote = JsonConvert.DeserializeObject<BaseResponse<List<TaskModel>>>(responseAsString.Result);
+
+                        if (resultRemote.success) {
+                            var remoteTasks = resultRemote.data;
+                            task = remoteTasks;
+                        }
+                    }
+                }
+                return Json(new { isReady = true, list = task, msg = "" }, JsonRequestBehavior.AllowGet);
+            } catch (Exception e) {
+                return Json(new { isReady = false, msg = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> getTaskYellow() {
+            List<TaskModel> task = new List<TaskModel>();
+            try {
+                var identity = getHomeViewModel();
+                using (var client = getClient(identity.Token)) {
+                    var getTask = client.GetAsync(endPointTask + "/getTaskYellow?unit_id= " + identity.Unit);
+                    getTask.Wait();
+
+                    HttpResponseMessage response = getTask.Result;
+                    if (response.IsSuccessStatusCode) {
+                        response.EnsureSuccessStatusCode();
+                        var responseAsString = response.Content.ReadAsStringAsync();
+                        responseAsString.Wait();
+                        var resultRemote = JsonConvert.DeserializeObject<BaseResponse<List<TaskModel>>>(responseAsString.Result);
+
+                        if (resultRemote.success) {
+                            var remoteTasks = resultRemote.data;
+                            task = remoteTasks;
+                        }
+                    }
+                }
+                return Json(new { isReady = true, list = task, msg = "" }, JsonRequestBehavior.AllowGet);
+            } catch (Exception e) {
+                return Json(new { isReady = false, msg = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> getTaskGreen() {
+            List<TaskModel> task = new List<TaskModel>();
+            try {
+                var identity = getHomeViewModel();
+                using (var client = getClient(identity.Token)) {
+                    var getTask = client.GetAsync(endPointTask + "/getTaskGreen?unit_id= " + identity.Unit);
+                    getTask.Wait();
+
+                    HttpResponseMessage response = getTask.Result;
+                    if (response.IsSuccessStatusCode) {
+                        response.EnsureSuccessStatusCode();
+                        var responseAsString = response.Content.ReadAsStringAsync();
+                        responseAsString.Wait();
+                        var resultRemote = JsonConvert.DeserializeObject<BaseResponse<List<TaskModel>>>(responseAsString.Result);
+
+                        if (resultRemote.success) {
+                            var remoteTasks = resultRemote.data;
+                            task = remoteTasks;
+                        }
+                    }
+                }
+                return Json(new { isReady = true, list = task, msg = "" }, JsonRequestBehavior.AllowGet);
+            } catch (Exception e) {
+                return Json(new { isReady = false, msg = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [HttpPost]
         public async Task<JsonResult> assignTask(long id, long asignado) {
             try {

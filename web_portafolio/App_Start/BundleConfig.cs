@@ -120,6 +120,9 @@ namespace web_portafolio {
             bundles.Add(new ScriptBundle("~/bundles/Process/Backlog").Include(
             "~/JS/Backlog.js"
             ));
+            bundles.Add(new ScriptBundle("~/bundles/Process/Alerts").Include(
+            "~/JS/Alerts.js"
+            ));
 
             bundles.Add(new ScriptBundle("~/bundles/Template/TemplateCreate").Include(
             "~/JS/TemplateCreate.js"

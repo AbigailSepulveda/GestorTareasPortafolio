@@ -852,6 +852,7 @@
     <Content Include="Content\SelectSearch\js\bootstrap-select.js.map" />
     <Content Include="JS\Backlog.js" />
     <Content Include="JS\Rejection.js" />
+    <Content Include="JS\Alerts.js" />
     <Content Include="JS\Workload.js" />
     <Content Include="JS\TemplateShow.js" />
     <Content Include="JS\TemplateCreate.js" />
@@ -910,6 +911,7 @@
     <Content Include="Views\Template\Show.cshtml" />
     <Content Include="Views\Tasks\Workload.cshtml" />
     <Content Include="Views\Tasks\Rejection.cshtml" />
+    <Content Include="Views\Process\Alerts.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

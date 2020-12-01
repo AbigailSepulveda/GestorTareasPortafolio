@@ -30,6 +30,14 @@ namespace web_portafolio.Controllers {
             }
         }
 
+        public ActionResult Alerts() {
+            if (User.Identity.IsAuthenticated) {
+                return View(getHomeViewModel());
+            } else {
+                return RedirectToAction("Login", "Auth");
+            }
+        }
+
         [HttpGet]
         public async Task<JsonResult> getTasksById(decimal id) {
             TaskModel tasks = new TaskModel();
