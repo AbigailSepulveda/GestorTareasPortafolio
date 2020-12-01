@@ -1,0 +1,105 @@
+﻿
+@{ List<web_portafolio.Models.User> usuarios = new web_portafolio.Controllers.TasksController().getUsersByUnitForSelect(Model.Token, Model.Unit).Result;
+
+    ViewBag.Title = "Rechazos";
+}
+
+<h2>Rechazos</h2>
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="page-header">
+            <p class="pageheader-text"><div id="lblTitle"><h2 class="pageheader-title">Asignaciones</h2></div></p>
+        </div>
+        <div class="row">
+
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-12">
+
+            </div>
+
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-8 col-12">
+                <div class="card">
+                    <div class="card-title">
+                        <h5 class="card-header">Tareas Rechazadas</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="tableTasks" class="table table-bordered" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Descripcion</th>
+                                        <th>Proceso</th>
+                                        <th>Responsable</th>
+                                        <th>Mensaje</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 col-12">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalRefuse" tabindex="-1" role="dialog" aria-labelledby="modalRefuseLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalRefuseLabel">Rechazar Tarea</h5>
+                <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div id="divModalId" class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <label for="modalID" class="col-form-label">Código</label>
+                        <input id="modalID" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <label for="modalNombre" class="col-form-label">Nombre</label>
+                        <input id="modalNombre" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <label for="modalMessage" class="col-form-label">Mensaje</label>
+                        <input id="modalMessage" type="text" class="form-control" readonly>
+                        <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 col-12">
+                        <label for="estado" class="col-form-label">Estado</label>
+                        <select class="form-control" id="estado" readonly>
+                            <option value="0">Pendiente</option>
+                        </select>
+                        <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 col-12">
+                        <label for="asignado" class="col-form-label">Asignado</label>
+                        <select class="form-control" id="asignado">
+                            <option value="-1">Seleccionar</option>
+                            @{
+                                foreach (web_portafolio.Models.User s in usuarios) {
+                                    <option value="@s.id">@s.name</option>
+                                }
+                            }
+                        </select>
+                        <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" align="right">
+                <button class="btn btn-light" id="btnCancel" onclick="hideModal();">Cerrar</button>
+                &nbsp;&nbsp;&nbsp;
+                <button class="btn btn-info" id="btnAdd" onclick="assignTask();">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/Tasks/Rejection")

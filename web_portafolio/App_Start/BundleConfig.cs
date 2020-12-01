@@ -110,6 +110,10 @@ namespace web_portafolio {
             "~/JS/Workload.js"
             ));
 
+            bundles.Add(new ScriptBundle("~/bundles/Tasks/Rejection").Include(
+            "~/JS/Rejection.js"
+            ));
+
             bundles.Add(new ScriptBundle("~/bundles/Process/Create").Include(
             "~/JS/CreateProcess.js"
             ));

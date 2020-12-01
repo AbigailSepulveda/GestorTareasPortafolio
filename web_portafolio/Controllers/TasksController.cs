@@ -115,6 +115,14 @@ namespace web_portafolio.Controllers {
             }
         }
 
+        public ActionResult Rejection() {
+            if (User.Identity.IsAuthenticated) {
+                return View(getHomeViewModel());
+            } else {
+                return RedirectToAction("Login", "Auth");
+            }
+        }
+
         [HttpPost]
         public async Task<JsonResult> createTask(String nombre, String descripcion,
                                                  String responsableId, String process,
@@ -209,6 +217,69 @@ namespace web_portafolio.Controllers {
                     }
                 }
                 return Json(new { isReady = true, list = task, msg = "" }, JsonRequestBehavior.AllowGet);
+            } catch (Exception e) {
+                return Json(new { isReady = false, msg = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> getRejectionTasksByCreator() {
+            List<AlertModel> task = new List<AlertModel>();
+            try {
+                var identity = getHomeViewModel();
+                using (var client = getClient(identity.Token)) {
+                    var getTask = client.GetAsync(endPointTask + "/getRejectionTasksByCreator?id= " + identity.Id);
+                    getTask.Wait();
+
+                    HttpResponseMessage response = getTask.Result;
+                    if (response.IsSuccessStatusCode) {
+                        response.EnsureSuccessStatusCode();
+                        var responseAsString = response.Content.ReadAsStringAsync();
+                        responseAsString.Wait();
+                        var resultRemote = JsonConvert.DeserializeObject<BaseResponse<List<AlertModel>>>(responseAsString.Result);
+
+                        if (resultRemote.success) {
+                            var remoteTasks = resultRemote.data;
+                            task = remoteTasks;
+                        }
+                    }
+                }
+                return Json(new { isReady = true, list = task, msg = "" }, JsonRequestBehavior.AllowGet);
+            } catch (Exception e) {
+                return Json(new { isReady = false, msg = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> assignTask(long id, long asignado) {
+            try {
+                var identity = getHomeViewModel();
+
+                TaskModel taskModel = new TaskModel();
+                taskModel.id = id;
+                taskModel.assingId = asignado;
+
+                var json = JsonConvert.SerializeObject(taskModel);
+                var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+                using (var client = getClient(identity.Token)) {
+                    var postTask = client.PostAsync(endPointTask + "/assignTask", data);
+                    postTask.Wait();
+                    HttpResponseMessage response = postTask.Result;
+                    if (response.IsSuccessStatusCode) {
+                        response.EnsureSuccessStatusCode();
+                        var responseAsString = response.Content.ReadAsStringAsync();
+                        responseAsString.Wait();
+                        var resultRemote = JsonConvert.DeserializeObject<BaseResponse<object>>(responseAsString.Result);
+
+                        if (resultRemote.success) {
+                            return Json(new { isReady = true, msg = resultRemote.message }, JsonRequestBehavior.AllowGet);
+                        } else {
+                            return Json(new { isReady = false, msg = resultRemote.message }, JsonRequestBehavior.AllowGet);
+                        }
+                    }
+                }
+                return Json(new { isReady = true, msg = "" }, JsonRequestBehavior.AllowGet);
             } catch (Exception e) {
                 return Json(new { isReady = false, msg = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
             }
