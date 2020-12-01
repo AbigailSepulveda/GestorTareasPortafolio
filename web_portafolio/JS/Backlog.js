@@ -66,15 +66,17 @@ function initTable() {
         "columnDefs": [
             { width: '20%', targets: 0 },
             { width: '20%', targets: 1 },
-            { width: '20%', targets: 2 },
-            { width: '15%', targets: 3 },
-            { width: '15%', targets: 4 },
-            { width: '10%', targets: 5 }
+            { width: '10%', targets: 2 },
+            { width: '10%', targets: 3 },
+            { width: '10%', targets: 4 },
+            { width: '15%', targets: 5 },
+            { width: '15%', targets: 6 }
         ],
         "aoColumns": [
             { title: "Nombre", mData: 'name', sortable: true },
             { title: "Fecha Termino", mData: 'endDate', sortable: false },
             { title: "Realizadas", mData: 'task_ready', sortable: false },
+            { title: "Trabajando", mData: 'task_working', sortable: false },
             { title: "Pendientes", mData: 'task_peding', sortable: false },
             {
                 title: "Avance", "render": function (data, type, row) {
