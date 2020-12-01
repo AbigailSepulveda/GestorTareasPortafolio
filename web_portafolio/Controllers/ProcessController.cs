@@ -145,5 +145,40 @@ namespace web_portafolio.Controllers {
                 return Json(new { isReady = false, msg = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
             }
         }
+
+        [HttpPost]
+        public async Task<JsonResult> editTask(long id, string estado, decimal asignado) {
+            try {
+                var identity = getHomeViewModel();
+                TaskModel request = new TaskModel();
+                request.id = id;
+                request.taskStatusId = estado;
+                request.assingId = long.Parse(identity.Id);
+
+                var json = JsonConvert.SerializeObject(request);
+                var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+                using (var client = getClient(identity.Token)) {
+                    var postTask = client.PostAsync(endPointTask + "/editTask", data);
+                    postTask.Wait();
+                    HttpResponseMessage response = postTask.Result;
+                    if (response.IsSuccessStatusCode) {
+                        response.EnsureSuccessStatusCode();
+                        var responseAsString = response.Content.ReadAsStringAsync();
+                        responseAsString.Wait();
+                        var resultRemote = JsonConvert.DeserializeObject<BaseResponse<object>>(responseAsString.Result);
+
+                        if (resultRemote.success) {
+                            return Json(new { isReady = true, msg = resultRemote.message }, JsonRequestBehavior.AllowGet);
+                        } else {
+                            return Json(new { isReady = false, msg = resultRemote.message }, JsonRequestBehavior.AllowGet);
+                        }
+                    }
+                }
+                return Json(new { isReady = true, msg = "" }, JsonRequestBehavior.AllowGet);
+            } catch (Exception e) {
+                return Json(new { isReady = false, msg = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

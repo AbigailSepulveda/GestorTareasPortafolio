@@ -152,11 +152,13 @@ function edit(id) {
         success: function (resultData) {
             if (resultData.isReady) {
                 console.log(resultData.list);
+                $("#id").val(resultData.list.id);
                 $("#nombre").val(resultData.list.name);
                 $("#descripcion").val(resultData.list.description);
                 $("#padre").val(resultData.list.fatherTaksId);
                 $("#estado").val(resultData.list.taskStatusId);
                 $("#fechaTermino").val(resultData.list.sDateEnd);
+                $("#fechaInicio").val(resultData.list.sDateStart);
                 $("#asignado").val(resultData.list.assingId);
                 documents = resultData.list.documents;
             } else {
@@ -171,6 +173,52 @@ function edit(id) {
         }, error: function (jqXHR, error, errorThrown) {
             Swal.fire({
                 title: "ERROR AL CARGAR LA GRILLA",
+                text: "Contacte la Administrador",
+                type: "error",
+                showCancelButton: false,
+                confirmButtonText: "CERRAR"
+            });
+        }
+    });
+}
+
+function editTask() {
+    var id = $("#id").val();
+    var estado = $("#estado").val();
+    var asignado = $("#asignado").val();
+
+    $.ajax({
+        url: baseUrl + '/Process/editTask',
+        method: 'POST',
+        data: {
+            id: id,
+            estado: estado,
+            asignado: asignado
+        },
+        dataType: 'json',
+        success: function (resultData) {
+            if (resultData.isReady) {
+                loadProcess();
+                edit(id);
+                Swal.fire({
+                    title: "REALIZADO",
+                    text: resultData.msg,
+                    type: "success",
+                    showCancelButton: false,
+                    confirmButtonText: "ACEPTAR"
+                });
+            } else {
+                Swal.fire({
+                    title: "PROBLEMA DETECTADO",
+                    text: resultData.msg,
+                    type: "error",
+                    showCancelButton: false,
+                    confirmButtonText: "CERRAR"
+                });
+            }
+        }, error: function (jqXHR, error, errorThrown) {
+            Swal.fire({
+                title: "ERROR AL CARGAR",
                 text: "Contacte la Administrador",
                 type: "error",
                 showCancelButton: false,

@@ -69,6 +69,11 @@
             </div>
             <div class="card-body">
                 <div class="form-row col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12" style="display: none;">
+                        <label for="id" class="col-form-label">id</label>
+                        <input type="text" id="id" class="form-control" placeholder="" style="text-transform:uppercase" />
+                        <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                    </div>
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
                         <label for="nombre" class="col-form-label">Nombre</label>
                         <input type="text" id="nombre" class="form-control" placeholder="" style="text-transform:uppercase" />
@@ -134,7 +139,7 @@
                     <button class="btn btn-dark" onclick="showModal();" style="width:150px;">Documentos</button>
                     &nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;
-                    <button class="btn btn-success" onclick="create();" style="width:150px;">Actualizar</button>
+                    <button class="btn btn-success" onclick="editTask();" style="width:150px;">Actualizar</button>
                 </div>
             </div>
         </div>
