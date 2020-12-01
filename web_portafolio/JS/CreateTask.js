@@ -18,7 +18,6 @@
 function cleanInputs() {
     $("#nombre").val('');
     $("#descripcion").val('');
-    $("#padre").val('-1');
     $("#proceso").val('-1');
     $("#responsable").val('-1');
     $("#fechaInicio").val('');
@@ -31,7 +30,7 @@ function createTask() {
     var descripcion = $("#descripcion").val();
     var responsableId = $("#responsable").val();
     var processId = $("#proceso").val();
-    var taskId = $("#padre").val();
+    var taskId = -1;
     var state = $("#estado").val();
     var end = $("#fechaTermino").val();
 
