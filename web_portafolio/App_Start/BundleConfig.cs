@@ -99,6 +99,9 @@ namespace web_portafolio {
 
 
             // Tasks
+            bundles.Add(new ScriptBundle("~/bundles/Home").Include(
+            "~/JS/Home.js"
+            ));
             bundles.Add(new ScriptBundle("~/bundles/Tasks/Index").Include(
             "~/JS/Tasks.js"
             ));

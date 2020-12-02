@@ -227,6 +227,10 @@
     <Compile Include="Models\AlertModel.cs" />
     <Compile Include="Models\ConfigTrafficLight.cs" />
     <Compile Include="Models\Enterprise.cs" />
+    <Compile Include="Models\ListModel\ListReportUnit.cs" />
+    <Compile Include="Models\ListModel\ListReportProcess.cs" />
+    <Compile Include="Models\ListModel\ListReportTask.cs" />
+    <Compile Include="Models\ListModel\ListReportAlerts.cs" />
     <Compile Include="Models\ListModel\ListProcessModel.cs" />
     <Compile Include="Models\LoginView.cs" />
     <Compile Include="Models\Module.cs" />
@@ -850,6 +854,7 @@
     <Content Include="Content\FileUpload\dist\less\file-upload.less" />
     <Content Include="Content\SelectSearch\css\bootstrap-select.css.map" />
     <Content Include="Content\SelectSearch\js\bootstrap-select.js.map" />
+    <Content Include="JS\Home.js" />
     <Content Include="JS\Backlog.js" />
     <Content Include="JS\Rejection.js" />
     <Content Include="JS\Alerts.js" />

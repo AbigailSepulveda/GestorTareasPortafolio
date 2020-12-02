@@ -1,11 +1,83 @@
 ﻿@{
     ViewBag.Title = "Inicio";
 }
-<head>
-</head>
+
 <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="page-header">
+            <p class="pageheader-text"><div id="lblTitle"><h2 class="pageheader-title">Inicio</h2></div></p>
+        </div>
+    </div>
+    <div class="row col-xl-4 col-lg-4 col-md-4 col-sm-14 col-xs-4 col-12">
+
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+            <div class="card">
+                <div class="card-title">
+                    <h5 class="card-header">Semaforo</h5>
+                </div>
+                <div class="card-body row">
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4 col-4">
+                        <div class="card">
+                            <div class="card-title">
+                                <h5 class="card-header" style="background-color: #C70039; color:white;text-align:center;">Vencidas</h5>
+                            </div>
+                            <div class="card-body">
+                                <input id="red" type="text" class="form-control" style="text-align:center" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4 col-4">
+                        <div class="card">
+                            <div class="card-title">
+                                <h5 class="card-header" style="background-color: #FFC300; color:white; text-align:center;">Por Vencer</h5>
+                            </div>
+                            <div class="card-body">
+                                <input id="yellow" type="text" class="form-control" style="text-align:center" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4 col-4">
+                        <div class="card">
+                            <div class="card-title">
+                                <h5 class="card-header" style="background-color: #007C35; color:white;text-align:center;">Al Día</h5>
+                            </div>
+                            <div class="card-body">
+                                <input id="green" type="text" class="form-control" style="text-align:center" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+            <div class="card">
+                <div class="card-title">
+                    <h5 class="card-header">Avance</h5>
+                </div>
+                <div class="card-body">
+                    <div id="container2" width="100%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-8 col-12">
+        <div class="card">
+            <div class="card-title">
+                <h5 class="card-header">Procesos</h5>
+            </div>
+            <div class="card-body">
+                <div id="container1" width="100%"></div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title">
+                <h5 class="card-header">Unidades</h5>
+            </div>
+            <div class="card-body">
+                <div id="container3" width="100%"></div>
+            </div>
+        </div>
     </div>
 </div>
-
 @Scripts.Render("~/bundles/Home")
