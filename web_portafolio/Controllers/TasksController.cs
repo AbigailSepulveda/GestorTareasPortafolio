@@ -123,6 +123,14 @@ namespace web_portafolio.Controllers {
             }
         }
 
+        public ActionResult MyTasks() {
+            if (User.Identity.IsAuthenticated) {
+                return View(getHomeViewModel());
+            } else {
+                return RedirectToAction("Login", "Auth");
+            }
+        }
+
         [HttpPost]
         public async Task<JsonResult> createTask(String nombre, String descripcion,
                                                  String responsableId, String process,
@@ -313,6 +321,34 @@ namespace web_portafolio.Controllers {
                 var identity = getHomeViewModel();
                 using (var client = getClient(identity.Token)) {
                     var getTask = client.GetAsync(endPointTask + "/getTaskGreen?unit_id= " + identity.Unit);
+                    getTask.Wait();
+
+                    HttpResponseMessage response = getTask.Result;
+                    if (response.IsSuccessStatusCode) {
+                        response.EnsureSuccessStatusCode();
+                        var responseAsString = response.Content.ReadAsStringAsync();
+                        responseAsString.Wait();
+                        var resultRemote = JsonConvert.DeserializeObject<BaseResponse<List<TaskModel>>>(responseAsString.Result);
+
+                        if (resultRemote.success) {
+                            var remoteTasks = resultRemote.data;
+                            task = remoteTasks;
+                        }
+                    }
+                }
+                return Json(new { isReady = true, list = task, msg = "" }, JsonRequestBehavior.AllowGet);
+            } catch (Exception e) {
+                return Json(new { isReady = false, msg = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> getTasksByUserId() {
+            List<TaskModel> task = new List<TaskModel>();
+            try {
+                var identity = getHomeViewModel();
+                using (var client = getClient(identity.Token)) {
+                    var getTask = client.GetAsync(endPointTask + "/getTasksByUserId?id= " + identity.Id);
                     getTask.Wait();
 
                     HttpResponseMessage response = getTask.Result;

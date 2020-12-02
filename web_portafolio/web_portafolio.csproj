@@ -854,6 +854,7 @@
     <Content Include="Content\FileUpload\dist\less\file-upload.less" />
     <Content Include="Content\SelectSearch\css\bootstrap-select.css.map" />
     <Content Include="Content\SelectSearch\js\bootstrap-select.js.map" />
+    <Content Include="JS\MyTasks.js" />
     <Content Include="JS\Home.js" />
     <Content Include="JS\Backlog.js" />
     <Content Include="JS\Rejection.js" />
@@ -917,6 +918,7 @@
     <Content Include="Views\Tasks\Workload.cshtml" />
     <Content Include="Views\Tasks\Rejection.cshtml" />
     <Content Include="Views\Process\Alerts.cshtml" />
+    <Content Include="Views\Tasks\MyTasks.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

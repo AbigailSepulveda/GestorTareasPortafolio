@@ -1,0 +1,120 @@
+﻿@{
+    List<web_portafolio.Models.User> usuarios = new web_portafolio.Controllers.TasksController().getUsersByUnitForSelect(Model.Token, Model.Unit).Result;
+    ViewBag.Title = "Mis Tareas";
+}
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="page-header">
+            <p class="pageheader-text"><div id="lblTitle"><h2 class="pageheader-title">Mis Tareas</h2></div></p>
+        </div>
+    </div>
+    <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-xs-7 col-12">
+        <div class="card">
+            <div class="card-title">
+                <h5 class="card-header" style="background-color: #3D405C; color:white;">Tareas</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="tableTasks" class="table table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Estado</th>
+                                <th>Nombre</th>
+                                <th>Descripcion</th>
+                                <th>Proceso</th>
+                                <th>Fecha Limite</th>
+                                <th>Documentos</th>
+                                <th>Seleccionar</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-xs-5 col-12">
+        <div class="card">
+            <div class="card-title">
+                <h5 class="card-header" style="background-color: #7B82BF; color:white;">Detalle de la Tareas</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-row col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12" style="display: none;">
+                        <label for="id" class="col-form-label">id</label>
+                        <input type="text" id="id" class="form-control" placeholder="" style="text-transform:uppercase" />
+                        <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                    </div>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+                        <label for="nombre" class="col-form-label">Nombre</label>
+                        <input type="text" id="nombre" class="form-control" placeholder="" style="text-transform:uppercase" />
+                        <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                    </div>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
+                        <label for="patente" class="col-form-label">Descripcion</label>
+                        <input type="text" id="descripcion" class="form-control" placeholder="" style="text-transform:uppercase" />
+                        <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 col-12">
+                        <label for="fechaInicio" class="col-form-label">Inicio</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                            </span>
+                            <input id="fechaInicio" type="text" class="form-control" readonly>
+                            <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 col-12">
+                        <label for="fechaTermino" class="col-form-label">Termino</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                            </span>
+                            <input id="fechaTermino" type="text" class="form-control" readonly>
+                            <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 col-12">
+                        <label for="estado" class="col-form-label">Estado</label>
+                        <select class="form-control" id="estado">
+                            <option value="-1">Seleccionar</option>
+                            <option value="0">Pendiente</option>
+                            <option value="4">Trabajando</option>
+                            <option value="2">Realizado</option>
+                            <option value="3">Rechazado</option>
+                        </select>
+                        <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 col-12">
+                        <label for="asignado" class="col-form-label">Asignado</label>
+                        <select class="form-control" id="asignado">
+                            <option value="-1">Seleccionar</option>
+                            @{
+                                foreach (web_portafolio.Models.User s in usuarios) {
+                                    <option value="@s.id">@s.name</option>
+                                }
+                            }
+                        </select>
+                        <div class="invalid-feedback" id="lblError">Campo Requerido</div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div id="sparkline-revenue"></div>
+            <div class="form-row" align="right">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12" align="right">
+                    <button class="btn btn-dark" onclick="showModal();" style="width:150px;">Documentos</button>
+                    &nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-success" onclick="editTask();" style="width:150px;">Actualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/Tasks/MyTasks")
