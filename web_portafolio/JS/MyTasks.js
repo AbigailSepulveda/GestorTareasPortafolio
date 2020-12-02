@@ -171,7 +171,7 @@ function editTask() {
         dataType: 'json',
         success: function (resultData) {
             if (resultData.isReady) {
-                loadProcess();
+                loadTasks();
                 edit(id);
                 Swal.fire({
                     title: "REALIZADO",
